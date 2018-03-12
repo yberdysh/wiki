@@ -5,11 +5,14 @@ const nunjucks = require('nunjucks');
 const fs = require('fs');
 const path = require('path');
 const models = require('./models');
+const router = require("./routes")
 
 const app = express();
 
 app.use(morgan('dev'));
-
+//body parser for submitting forms
+app.use(bodyParser.urlencoded({extended: true}));
+//body parser for ajax requests
 app.use(bodyParser.json());
 
 app.use(express.static(__dirname + '/views'))
@@ -22,6 +25,7 @@ app.set('view engine', 'html');
 // when res.render works with html files, have it use nunjucks to do so
 app.engine('html', nunjucks.render);
 
+app.use("/", router);
 
 models.db.sync({force: true})
 .then(function () {
