@@ -27,6 +27,16 @@ app.engine('html', nunjucks.render);
 
 app.use("/", router);
 
+// app.use((err, req, res, next) => {
+//   // console.error(err);
+//   // res.status(500).send("There is an error");
+//   res.status(err.status || 500);
+//   res.render('error', {
+//     message: err.message,
+//     error: err
+//   });
+// });
+
 models.db.sync({force: true})
 .then(function () {
     console.log('All tables created!');
